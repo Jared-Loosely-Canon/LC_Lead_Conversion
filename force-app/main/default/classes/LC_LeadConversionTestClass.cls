@@ -8,7 +8,9 @@ private class LC_LeadConversionTestClass {
     private static void testConvertLead(){
         Map<Id,Lead> leadMap = new Map<Id,Lead>([SELECT Id FROM Lead WHERE isConverted = False]);
         List<Id> idList = new List<id>(leadMap.keySet());
-        List<Lead> leadConvertResultList = LC_LeadConversion.convertLead(idList);
+        List<List<Lead>> leadFlowList = new List<List<Lead>>();
+        leadFlowList.add(leadMap.values());
+        List<Lead> leadConvertResultList = LC_LeadConversion.convertLead(leadFlowList);
         for(Lead l : leadConvertResultList){
             System.debug('lcr result: ' + l);
         }

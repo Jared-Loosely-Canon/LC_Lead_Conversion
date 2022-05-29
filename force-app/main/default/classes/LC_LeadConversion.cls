@@ -1,7 +1,8 @@
 public without sharing class LC_LeadConversion {
     @InvocableMethod(label = 'Convert Lead' description='Returns the List of Converted Leads')
-    public static List<Lead> convertLead(List<Id> leadIdList){
+    public static List<Lead> convertLead(List<List<Lead>> leadIdList){
         // Get all the fields unique to the Salesforce Org
+        Lead[] leadFlowList = leadIdList.get(0);
         String leadFieldString = '';
         Map <String,Schema.SObjectType> gd = Schema.getGlobalDescribe();
         Schema.SObjectType sobjType = gd.get('Lead');
@@ -17,8 +18,8 @@ public without sharing class LC_LeadConversion {
 
         // Map out the parameter IN for the Query
         String leadListConvertString =  '(';
-        for(Id i : leadIdList){
-            leadListConvertString += '\''+i+'\',';
+        for(Lead i : leadFlowList){
+            leadListConvertString += '\''+i.Id+'\',';
         }
         leadListConvertString = leadListConvertString.left(leadListConvertString.length()-1) + ')';
         //System.debug('leadListConvertString = ' + leadListConvertString);
