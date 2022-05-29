@@ -1,6 +1,11 @@
 public without sharing class LC_LeadConversion {
-    public static List<Database.LeadConvertResult> convertLead(List<Lead> leadList){
+    @InvocableMethod(label = 'Convert Lead' description='Returns the List of Converted Leads')
+    public static List<Lead> convertLead(List<Id> leadIdList){
+        // Get All Lead Fields from the Org
+
+
         List<Database.LeadConvert> leadConvertList = new List<Database.LeadConvert>();
+        Lead[] leadList = [SELECT Id, IsConverted FROM Lead WHERE Id IN : leadIdList];
         LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted=true LIMIT 1];
         for (Lead l : leadList) {
             if(l.IsConverted == False){
@@ -11,6 +16,6 @@ public without sharing class LC_LeadConversion {
             }
         }
         List<Database.LeadConvertResult> leadConvertResultList = Database.convertLead(leadConvertList);
-        return leadConvertResultList;
+        return leadList;
     }
 }

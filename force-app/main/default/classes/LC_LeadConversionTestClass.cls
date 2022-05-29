@@ -6,10 +6,11 @@ private class LC_LeadConversionTestClass {
     }
     @isTest
     private static void testConvertLead(){
-        List<Lead> leadList = [SELECT Id, LastName, Company, isConverted FROM Lead WHERE isConverted = False];
-        List<Database.LeadConvertResult> leadConvertResultList = LC_LeadConversion.convertLead(leadList);
-        for(Database.LeadConvertResult lcr : leadConvertResultList){
-            System.debug('lcr result: ' + lcr);
+        Map<Id,Lead> leadMap = new Map<Id,Lead>([SELECT Id FROM Lead WHERE isConverted = False]);
+        List<Id> idList = new List<id>(leadMap.keySet());
+        List<Lead> leadConvertResultList = LC_LeadConversion.convertLead(idList);
+        for(Lead l : leadConvertResultList){
+            System.debug('lcr result: ' + l);
         }
     }
 }
