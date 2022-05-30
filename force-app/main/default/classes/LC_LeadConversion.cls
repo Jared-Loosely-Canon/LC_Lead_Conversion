@@ -1,6 +1,6 @@
-public without sharing class LC_LeadConversion {
+global without sharing class LC_LeadConversion {
     @InvocableMethod(label = 'Convert Lead' description='Returns the List of Converted Leads')
-    public static List<Lead> convertLead(List<List<Lead>> leadIdList){
+    global static List<Lead> convertLead(List<List<Lead>> leadIdList){
         // Get all the fields unique to the Salesforce Org
         Lead[] leadFlowList = leadIdList.get(0);
         String leadFieldString = '';
@@ -22,7 +22,6 @@ public without sharing class LC_LeadConversion {
             leadListConvertString += '\''+i.Id+'\',';
         }
         leadListConvertString = leadListConvertString.left(leadListConvertString.length()-1) + ')';
-        //System.debug('leadListConvertString = ' + leadListConvertString);
 
         // Finalize the Query String
         String queryString = 'SELECT ' + leadFieldString + ' FROM Lead WHERE IsConverted = False AND Id IN ' + leadListConvertString;
@@ -31,17 +30,39 @@ public without sharing class LC_LeadConversion {
         List<Lead> leadList = Database.query(queryString);
 
         List<Database.LeadConvert> leadConvertList = new List<Database.LeadConvert>();
-        //Lead[] leadList = [SELECT Id, IsConverted FROM Lead WHERE Id IN : leadIdList];
         LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted=true LIMIT 1];
         for (Lead l : leadList) {
             if(l.IsConverted == False){
                 Database.LeadConvert leadConvert = new Database.LeadConvert();
                 leadConvert.setLeadId(l.Id);
                 leadConvert.setConvertedStatus(convertStatus.MasterLabel);
+                // Add account if related
+                if(l.Account__c != null){
+                    leadConvert.setAccountId(l.Account__c);
+                }
                 leadConvertList.add(leadConvert);
             }
         }
         List<Database.LeadConvertResult> leadConvertResultList = Database.convertLead(leadConvertList);
         return leadList;
+    }
+    global class LC_ConvertLeadResult{
+        @InvocableVariable
+        global ID accountId;
+
+        @InvocableVariable
+        global ID contactId;
+
+        @InvocableVariable
+        global ID opportunityId;
+
+        @InvocableVariable
+        global Account[] accountList;
+
+        @InvocableVariable
+        global Contact[] contactList;
+
+        @InvocableVariable
+        global Opportunity[] opportunityList;
     }
 }

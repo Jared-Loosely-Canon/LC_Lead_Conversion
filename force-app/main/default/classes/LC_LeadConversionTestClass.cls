@@ -2,7 +2,7 @@
 private class LC_LeadConversionTestClass {
     @TestSetup
     private static void makeData(){
-        List<Lead> leadList = TestDataFactory.createSObjectList('Lead',10);
+        List<Lead> leadList = TestDataFactory.createSObjectList('Lead', 100);
     }
     @isTest
     private static void testConvertLead(){
@@ -11,8 +11,17 @@ private class LC_LeadConversionTestClass {
         List<List<Lead>> leadFlowList = new List<List<Lead>>();
         leadFlowList.add(leadMap.values());
         List<Lead> leadConvertResultList = LC_LeadConversion.convertLead(leadFlowList);
+        List<Id> leadReturnIdList = new List<Id>();
         for(Lead l : leadConvertResultList){
-            System.debug('lcr result: ' + l);
+            leadReturnIdList.add(l.id);
+        }
+        Lead[] updatedLeadList = [SELECT Id, isConverted FROM Lead WHERE Id IN : leadReturnIdList];
+        for(Lead l : updatedLeadList){
+            System.debug('updatedLeadList result: ' + l);
+            Boolean expected = true;
+            Boolean actual = l.IsConverted;
+            String msg = 'The Lead was not converted';
+            System.assertEquals(expected, actual, msg);
         }
     }
 }
