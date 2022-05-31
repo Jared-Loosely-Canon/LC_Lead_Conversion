@@ -43,7 +43,11 @@ global without sharing class LC_LeadConversion {
                 leadConvertList.add(leadConvert);
             }
         }
-        List<Database.LeadConvertResult> leadConvertResultList = Database.convertLead(leadConvertList);
+        // Temp solution, will catch duplicates and inform people of them
+        Database.DMLOptions dml = new Database.DMLOptions(); 
+        //dml.DuplicateRuleHeader.allowSave = true;
+        dml.OptAllOrNone = false;
+        List<Database.LeadConvertResult> leadConvertResultList = Database.convertLead(leadConvertList, dml);
         return leadList;
     }
     global class LC_ConvertLeadResult{
