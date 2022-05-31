@@ -1,18 +1,10 @@
-# Salesforce DX Project: Next Steps
+# Declarative Lead Conversion Enhancer
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+Do you need added functionality to the standard lead conversion process? Or maybe Leads need to be related to existing accounts on creation? How about auto conversion? Can I have any, all, or just one of these and still add my own automation?
 
-## How Do You Plan to Deploy Your Changes?
+Abosutely! This tool is intended to extend flows with plenty of useful and resuable tricks to help deal with leads quickly and efficiently in your org, with no code.
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
-
-## Configure Your Salesforce DX Project
-
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
-
-## Read All About It
-
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+## Features
+1) Automagically relate Leads to existing Accounts so you can stop selling to existing clients or easily convert to a contact
+2) Set your own auto conversion criteria
+3) Immediately begin automating other processes upon lead conversion without creating mutliple separate flows to handle everything! Or do that, it is all up to you.
